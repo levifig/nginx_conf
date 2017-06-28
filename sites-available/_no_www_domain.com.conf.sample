@@ -1,0 +1,15 @@
+ # Lets redirect all www.* requests to the non-www domain
+ server {
+   server_name  www.domain.com;
+   rewrite ^ $scheme://domain.com$request_uri? permanent;
+   access_log off;
+ }
+
+ server {
+   server_name domain.com;
+   root   /var/www/domain.com/htdocs;
+   access_log  /var/log/nginx/domain.access.log;
+
+   # Set of instructions to serve static files directly, without processing them: SPEED++++
+   include /etc/nginx/includes/serve_static;
+ }

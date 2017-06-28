@@ -1,0 +1,81 @@
+# From http://tracker.phpbb.com/browse/PHPBB3-9589
+location ~ ^/(config\.php|common\.php|includes|cache|files|store|images/avatars/upload)/ {
+  deny all;
+}
+
+# Let's feed it
+location / {
+  rewrite ^/cat([0-9]+)\.html$ /index.php?c=$1 last;
+  rewrite ^/forum([0-9]+)-([0-9]+)\.html$ /viewforum.php?f=$1&start=$2 last;
+  rewrite ^/forum([0-9]+)\.html$ /viewforum.php?f=$1 last;
+  rewrite ^/topic([0-9]+)-([0-9]+)\.html$ /viewtopic.php?t=$1&start=$2 last;
+  rewrite ^/topic([0-9]+)\.html$ /viewtopic.php?t=$1 last;
+  rewrite ^/post([0-9]+)\.html$ /viewtopic.php?p=$1 last;
+  rewrite ^/member([0-9]+)\.html$ /profile.php?mode=viewprofile&u=$1 last;
+}
+
+
+###########################
+# WOOHOO SEE-EEEE-OOHHHHH #
+###########################
+
+# DISCLAIMER: I in no way endorse the rewrite rules below.
+# PHPBB seems to work JUST FINE without 'em...
+# I don't know if they work or if they kill kittens.
+# Found them here: http://www.phpbb-seo.com/en/apache-mod-rewrite/article5412.html
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+# USE AT YOUR OWN RISK!!! NOOK-A-LEAR BOOM!!!11 #
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+
+
+# location / {
+#   # PHPBB SEO REWRITE RULES - ADVANCED
+#   # AUTHOR : dcz www.phpbb-seo.com
+#   # STARTED : 01/2006
+#
+#   # FORUM
+#   rewrite ^/[a-z0-9_-]*-f([0-9]+)/?(page([0-9]+)\.html)?$ /viewforum.php?f=$1&start=$3 last;
+#
+#   # TOPIC WITH VIRTUAL FOLDER
+#   rewrite ^/[a-z0-9_-]*-f([0-9]+)/[a-z0-9_-]*-t([0-9]+)(-([0-9]+))?\.html$ /viewtopic.php?f=$1&t=$2&start=$4 last;
+#
+#   # GLOBAL ANNOUNCES WITH VIRTUAL FOLDER
+#   rewrite ^/announces/[a-z0-9_-]*-t([0-9]+)(-([0-9]+))?\.html$ /viewtopic.php?t=$1&start=$3 last;
+#
+#   # TOPIC WITHOUT FORUM ID & DELIM
+#   rewrite ^/([a-z0-9_/-]*)/?[a-z0-9_-]*-t([0-9]+)(-([0-9]+))?\.html$ /viewtopic.php?forum_uri=$1&t=$2&start=$4 last;
+#
+#   # PROFILES THROUGH USERNAME
+#   rewrite ^/member/([^/]+)/?$ /memberlist.php?mode=viewprofile&un=$1 last;
+#
+#   # USER MESSAGES THROUGH USERNAME
+#   rewrite ^/member/([^/]+)/(topics|posts)/?(page([0-9]+)\.html)?$ /search.php?author=$1&sr=$2&start=$4 last;
+#
+#   # GROUPS ADVANCED
+#   rewrite ^/[a-z0-9_-]*-g([0-9]+)(-([0-9]+))?\.html$ /memberlist.php?mode=group&g=$1&start=$3 last;
+#
+#   # POST
+#   rewrite ^/post([0-9]+)\.html$ /viewtopic.php?p=$1 last;
+#
+#   # ACTIVE TOPICS
+#   rewrite ^/active-topics(-([0-9]+))?\.html$ /search.php?search_id=active_topics&start=$2&sr=topics last;
+#
+#   # UNANSWERED TOPICS
+#   rewrite ^/unanswered(-([0-9]+))?\.html$ /search.php?search_id=unanswered&start=$2&sr=topics last;
+#
+#   # NEW POSTS
+#   rewrite ^/newposts(-([0-9]+))?\.html$ /search.php?search_id=newposts&start=$2&sr=topics last;
+#
+#   # THE TEAM
+#   rewrite ^/the-team\.html$ /memberlist.php?mode=leaders last;
+#
+#   # HERE IS A GOOD PLACE TO ADD OTHER PHPBB RELATED REWRITERULES
+#
+#   # FORUM WITHOUT ID & DELIM
+#   # THESE THREE LINES MUST BE LOCATED AT THE END OF YOUR HTACCESS TO WORK PROPERLY
+#   if (!-e $request_filename) {
+#           rewrite ^/([a-z0-9_/-]+)/?(page([0-9]+)\.html)?$ /viewforum.php?forum_uri=$1&start=$3 last;
+#           break;
+#   }
+#   # END PHPBB PAGES

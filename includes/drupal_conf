@@ -1,0 +1,96 @@
+if (!-e $request_filename) {
+  rewrite ^(.+)$ /index.php?q=$1 last;
+}
+
+location ~* (/\..*|settings\.php$|\.(htaccess|engine|inc|info|install|module|profile|pl|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)$|^(Entries.*|Repository|Root|Tag|Template))$ {
+  deny all;
+}
+
+location ~* /files/.*\.php$ {
+  return 444;
+}
+location ~* /themes/.*\.php$ {
+  return 444;
+}
+
+
+
+###################
+## BOOST CONFIGS ##
+###################
+
+# location ~ \.css$ {
+#   if ( $request_method !~ ^(GET|HEAD)$ ) {
+#       return 405;
+#   }
+#   if ($http_cookie ~ "DRUPAL_UID") {
+#       return 405;
+#   }
+#   error_page 405 = @uncached;
+#   access_log  off;
+#   expires  max; #if using aggregator
+#   add_header X-Header "Boost Citrus 2.1";
+#   try_files /cache/perm/$host${uri}_.css /cache/$host${uri}_.css $uri =404;
+# }
+#
+# location ~ \.js$ {
+#   if ( $request_method !~ ^(GET|HEAD)$ ) {
+#       return 405;
+#   }
+#   if ($http_cookie ~ "DRUPAL_UID") {
+#       return 405;
+#   }
+#   error_page 405 = @uncached;
+#   access_log  off;
+#   expires  max; # if using aggregator
+#   add_header X-Header "Boost Citrus 2.2";
+#   try_files /cache/perm/$host${uri}_.js /cache/$host${uri}_.js $uri =404;
+# }
+#
+# location ~ \.json$ {
+#   if ( $request_method !~ ^(GET|HEAD)$ ) {
+#       return 405;
+#   }
+#   if ($http_cookie ~ "DRUPAL_UID") {
+#       return 405;
+#   }
+#   error_page 405 = @uncached;
+#   access_log  off;
+#   expires  max; # if using aggregator
+#   add_header X-Header "Boost Citrus 2.3";
+#   try_files /cache/normal/$host${uri}_.json /cache/$host${uri}_.json $uri =404;
+# }
+#
+# location ~* \.xml$ {
+#   if ( $request_method !~ ^(GET|HEAD)$ ) {
+#       return 405;
+#   }
+#   if ($http_cookie ~ "DRUPAL_UID") {
+#       return 405;
+#   }
+#   error_page 405 = @drupal;
+#   add_header Expires "Tue, 24 Jan 1984 08:00:00 GMT";
+#   add_header Cache-Control "must-revalidate, post-check=0, pre-check=0";
+#   add_header X-Header "Boost Citrus 2.4";
+#   charset utf-8;
+#   types { }
+#   default_type application/rss+xml;
+#   try_files /cache/normal/$host${uri}_.xml /cache/normal/$host${uri}_.html /cache/$host${uri}_.xml $uri @drupal;
+# }
+#
+# location ~* /feed$ {
+#   if ( $request_method !~ ^(GET|HEAD)$ ) {
+#       return 405;
+#   }
+#   if ($http_cookie ~ "DRUPAL_UID") {
+#       return 405;
+#   }
+#   error_page 405 = @drupal;
+#   add_header Expires "Tue, 24 Jan 1984 08:00:00 GMT";
+#   add_header Cache-Control "must-revalidate, post-check=0, pre-check=0";
+#   add_header X-Header "Boost Citrus 2.5";
+#   charset utf-8;
+#   types { }
+#   default_type application/rss+xml;
+#   try_files /cache/normal/$host${uri}_.xml /cache/normal/$host${uri}_.html /cache/$host${uri}_.xml $uri @drupal;
+# }

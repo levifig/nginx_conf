@@ -1,0 +1,19 @@
+# Send PHP request to our PHP-FPM
+location ~ \.php$ {
+  include fastcgi_params;
+  fastcgi_split_path_info ^(.+\.php)(/.+)$;
+  #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+  fastcgi_intercept_errors on;
+  # Change this to the host:port where your PHP-FPM is listening
+  # By the way, this is the default
+  fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+  #fastcgi_index index.php;
+  #fastcgi_connect_timeout 60;
+  #fastcgi_send_timeout 180;
+  #fastcgi_read_timeout 180;
+  #fastcgi_buffer_size 128k;
+  #fastcgi_buffers 4 256k;
+  #fastcgi_busy_buffers_size 256k;
+  #fastcgi_temp_file_write_size 256k;
+  #fastcgi_request_buffering off;
+}

@@ -1,0 +1,5 @@
+# All requests go to Wordpress
+location / { 
+  try_files $uri $uri/ /index.php?q=$uri&$args;
+}
+
